@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+void termina (char *msg){
+    perror(msg);
+    exit(-1);
+}
 int main (int argc, char *argv[]){
     int sommaPari = 0;
     int sommaDispari = 0;
-    FILE *pariFile = fopen("pari.txt", "w");
-    FILE *dispariFile = fopen("dispari.txt", "w");
+    FILE *pariFile = fopen("output/pari.txt", "wt");
+    FILE *dispariFile = fopen("output/dispari.txt", "wt");
+    if (pariFile == NULL || dispariFile == NULL){
+        termina("Errore apertura file!");
+    }
     for (int i = 1; i < argc; i++){
         int myN = atoi(argv[i]);
         // atoi restituisce 0 se gli do come input una stringa non valida 
@@ -27,8 +34,12 @@ int main (int argc, char *argv[]){
             fprintf(dispariFile, "%d\n", myN);
         }
     }
-    fclose(pariFile);
-    fclose(dispariFile);
     printf("Somma interi pari: %d\n", sommaPari);
     printf("Somma interi dispari: %d\n", sommaDispari);
+    if (fclose(pariFile) != 0){
+        termina("Errore chiusura file pari.txt");
+    }
+    if (fclose(dispariFile) != 0){
+        termina("Errore chiusura file dispari.txt");
+    }
 }

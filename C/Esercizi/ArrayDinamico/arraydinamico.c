@@ -19,11 +19,12 @@ int* inizializzaArray (int size){
     }
     return a;
 }
-void reallocaArray (int *a, int size){
+int* reallocaArray (int *a, int size){
     a = realloc(a, size * sizeof(int));
     if (a == NULL){
         termina("Realloc fallita");
     }
+    return a;
 }
 
 int main (int argc, char *argv[]){
@@ -39,12 +40,11 @@ int main (int argc, char *argv[]){
     int bCapacita = 10;
     int *a = inizializzaArray(aCapacita);
     int *b = inizializzaArray(bCapacita);
-
     for (int i = 1; i <= myInt; i++){
         if (i%3 == 0 && i%5 != 0){
             if (aIndex >=  aCapacita){
                 aCapacita = aCapacita * 2;
-                reallocaArray(a, aCapacita);
+                a = reallocaArray(a, aCapacita);
             }
             a[aIndex] = i;
             aIndex ++;
@@ -53,7 +53,7 @@ int main (int argc, char *argv[]){
         if (i%5 == 0 && i%3 != 0){
             if (bIndex >=  bCapacita){
                 bCapacita = bCapacita * 2;
-                reallocaArray(b, bCapacita);
+                b = reallocaArray(b, bCapacita);
             }
             b[bIndex] = i;
             bIndex ++;
